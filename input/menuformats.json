@@ -1,0 +1,7 @@
+{
+  "menus": {
+        "pdf": "pdf to download",
+        "viewer": "pdf opens in a special viewer",
+        "integrated": "Integrated in the website"
+  }
+}

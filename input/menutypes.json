@@ -1,0 +1,21 @@
+{
+  "menus": {
+        "oct_beer": "Beer menu",
+        "oct_breakfast": "Breakfast",
+        "oct_brunch": "Brunch",
+        "oct_daily": "Daily",
+        "oct_dessert": "Desserts",
+        "oct_dinner": "Dinner",
+        "oct_drink": "Drinks menu",
+        "oct_hit": "Hit",
+        "oct_lunch": "Lunch",
+        "oct_kids": "Kids",
+        "oct_menu": "Menu",
+        "oct_monthly": "Monthly",
+        "oct_other": "Specials",
+        "oct_recommendation": "Recommendations",
+        "oct_season": "Season offer",
+        "oct_weekly": "Weekly",
+        "oct_wine": "Wines"
+  }
+}
