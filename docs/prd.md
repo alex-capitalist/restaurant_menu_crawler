@@ -1,4 +1,4 @@
-# Agentic AI Prototype — Restaurant Menu Extraction
+# Product Requirements Document: Restaurant Menu Extraction System
 
 **Version:** 1.0  
 **Date:** September 3, 2025  
@@ -6,123 +6,113 @@
 
 ---
 
-## 1. Purpose
+## 1. Executive Summary
 
-Demonstrate a hybrid **heuristics-first with agentic fallback** system that extracts restaurant menu information from websites into structured data. The agent (LLM via LangChain) assists when rules fail or confidence is low.
-
----
-
-## 2. Goals & Non-Goals
-
-### Goals
-- Crawl each restaurant site up to **depth=3** (configurable via MAX_CRAWL_DEPTH env var, avoid blow-ups).
-- Detect **cookie banner** and record the *accept* button text if shown.
-- Identify **menus** (links or pages): derive
-  - **menu type** (from a predefined list),
-  - **format** (pdf / viewer / integrated / image),
-  - **language(s)**,
-  - **PDF open/download button** text where applicable.
-- Output per-restaurant JSON with status, warnings, and confidence.
-- **Agentic fallback**: when heuristics cannot confidently classify or find menus.
-
-### Non-Goals (for this prototype)
-- CAPTCHA solving, login-walled content.
-- Complex OCR of image-only PDFs/pages.
-- Scheduling/orchestration (single CLI run).
-- Database persistence (file output only).
+This document outlines the requirements for an automated system that extracts structured menu information from restaurant websites. The system will crawl restaurant sites, identify menu pages, classify menu types and formats, and output structured data for further processing.
 
 ---
 
-## 3. Approach Overview
+## 2. Problem Statement
 
-1. **Heuristics-first crawler (Playwright, depth=3, configurable)**  
-   - Wait for `networkidle`. Try to detect/click cookie banner (log accept text).  
-   - Collect internal links from:
-     - `<a href>`, elements with `onclick` containing `location.href`, attributes like `data-href`, `data-url`, router-like elements.
-     - SPA hinting: detect `history.pushState` usage via DOM attributes and inline handlers.
-   - Avoid **language-switch loops** (DE/EN/FR/IT path segments or `?lang=`) - canonicalize to first encountered language variant.
-   - Score links by **menu keywords** (DE/EN/FR/IT) and restrict BFS (Breadth First Search).
+Restaurant menu data is scattered across thousands of websites in various formats (PDF, HTML, images). Manual extraction is time-consuming and doesn't scale. We need an automated solution that can:
 
-2. **Menu detection & parsing (rules)**  
-   - **Format detection**:  
-     - `*.pdf` or `content-type: application/pdf` → `pdf`/`viewer` (if embedded).  
-     - Embedded `<object|iframe type="application/pdf">` → `viewer`.  
-     - Image-only hints → `image`.  
-     - Otherwise → `integrated` (HTML).
-   - **PDF text**: extract *first page only* via **PyMuPDF**. If no text → `pdf_image_unscannable`.  
-   - **Language**: `langdetect` on text if > 50 chars.  
-   - **Menu type**: keyword match (from `menutypes.json`), fallback to `"oct_menu"` when unclear.  
-   - Compute a **confidence score** from (keyword score, format clarity, text length).
-
-3. **Agentic fallback (LangChain + local OSS 20B)**  
-   - Triggered if:
-     - No menus found, or
-     - All candidates have **low confidence** (below threshold), or
-     - Conflicting signals (e.g., “Drinks” vs “Wine” classification).
-   - **Prompted reasoning** over:
-     - Page title & extracted text snippets (truncated),
-     - Top N internal links with anchor/context,
-     - Allowed **menu types** and **format** definitions,
-     - Target languages (DE/EN/FR/IT/ZH),
-     - Output schema (strict JSON).
-   - Agent returns **ranked candidates** with predicted type/format/language.  
-   - Crawler fetches those candidates and re-runs light parsing to confirm.
-
-4. **Output** (single JSON file):
-   - Per restaurant: name, url, `cookie_banner_accept`, `status`, `warnings`, array of `menus` (link, type, format, language[], pdf_button_text?, confidence).
+- Discover menu pages on restaurant websites
+- Classify menu types (lunch, dinner, wine, etc.)
+- Identify formats (PDF, integrated HTML, viewer)
+- Extract language information
+- Handle cookie banners and navigation challenges
 
 ---
 
-## 4. Inputs
+## 3. Goals & Success Criteria
 
-- `restaurants.json` (name → URL map).  
-- `menutypes.json` (code → label).  
-- `menuformat.json` (`pdf`, `viewer`, `integrated`).  
-- `.env` with LLM params:
-  - `OPENAI_API_BASE=http://localhost:1234/v1`
-  - `OPENAI_MODEL=gpt-oss-20b`
-  - `OPENAI_API_KEY=sk-noauth` (placeholder for LM Studio)
+### Primary Goals
+- **Automated Discovery**: Automatically find menu pages on restaurant websites
+- **Structured Output**: Generate consistent JSON data with menu information
+- **Multi-format Support**: Handle PDF, HTML, and embedded menu formats
+- **Language Detection**: Identify menu languages (DE, EN, FR, IT)
+- **Scalability**: Process 1000+ restaurants efficiently
+
+### Success Criteria
+- Extract at least one valid menu from 80% of restaurant websites
+- Achieve 90%+ accuracy in menu type classification
+- Process 100 restaurants in under 2 hours
+- Handle cookie banners on 95% of sites
+- Support PDF, HTML, and embedded menu formats
+
+---
+
+## 4. Functional Requirements
+
+### 4.1 Website Crawling
+- Crawl restaurant websites up to configurable depth (default: 3 levels)
+- Extract internal links from DOM elements (`<a>`, `onclick`, `data-href`)
+- Handle cookie banners by detecting and clicking accept buttons
+- Avoid infinite loops and duplicate page visits
+
+### 4.2 Menu Detection & Processing
+- Identify pages containing menu content using AI classification
+- Classify menu types from predefined list (lunch, dinner, wine, etc.)
+- Detect menu format (PDF, integrated HTML, embedded viewer)
+- Extract text from PDF menus (first page only)
+- Detect language information (DE, EN, FR, IT)
+
+### 4.3 Output Generation
+- Generate structured JSON output per restaurant
+- Include restaurant metadata, discovered menus, and confidence scores
+- Record cookie banner accept button text when found
+- Include error messages and warnings for failed extractions
 
 ---
 
 ## 5. Non-Functional Requirements
 
-- **Runtime**: 10–20 sites in < 10 minutes sequentially (no hard guarantee).  
-- **Resource**: Single machine, Dockerized.  
-- **Stability**: Skip gracefully on errors; always write a result entry with `status`.  
-- **Reproducibility**: pinned `requirements.txt`, `Dockerfile`, `playwright install`.
+### 5.1 Performance
+- Process 100 restaurants in under 2 hours
+- Handle timeouts gracefully (15s page load, 60s network idle)
+- Limit PDF downloads to 1MB per file
+- Cap text extraction to 3500 characters per page
+
+### 5.2 Reliability & Usability
+- Continue processing if individual sites fail
+- Support configuration via environment variables
+- Provide clear command-line interface with console output
+- Generate human-readable JSON output with error reporting
 
 ---
 
-## 6. Constraints & Assumptions
+## 6. Technical Constraints
 
-- Swiss-German context → multilingual sites common (DE/EN/FR/IT/ZH).  
-- Depth limited to **2**; do not recurse further.  
-- No OCR for images in this prototype.  
-- Respect robots.txt *lightly* (log, but don’t block; interview scope).
-
----
-
-## 7. Risks
-
-- SPA-only navigation and router-driven links may hide URLs without clicks.  
-- Language switch loops can still slip through (mitigated via canonicalization).  
-- OSS 20B model may produce non-strict JSON → add parsing guardrails.  
-- PDF viewers can obfuscate direct `.pdf` links.
+### 6.1 Data & Security
+- Input: JSON file with restaurant name → URL mapping
+- Output: Single JSON file with all results
+- Support multilingual content (DE, EN, FR, IT)
+- No authentication, CAPTCHA, or aggressive crawling
 
 ---
 
-## 8. Success Criteria
+## 7. Out of Scope
 
-- For **2–3 example restaurants**, produce **valid JSON** with at least one correct menu (type, format, language) and cookie accept label when present.  
-- Agentic fallback demonstrably improves results on a failing site (e.g., suggests correct menu link).
+### 7.1 Explicitly Excluded
+- CAPTCHA solving, login authentication, or OCR processing
+- Database persistence (file output only)
+- Real-time scheduling or complex SPA handling
+
+### 7.2 Dependencies
+- LLM server (local or external) with OpenAI-compatible API
+- Input files: `restaurants.json`, `menutypes.json`, `menuformats.json`
+- Environment variables for LLM server configuration
 
 ---
 
-## 9. Future Work
+## 8. Risks & Mitigations
 
-- Image/PDF OCR (PaddleOCR/Cloud OCR) for image-only menus.  
-- LangGraph agent with real tool-calling for controlled browsing.  
-- Scheduling (Airflow/n8n) and review UI for low-confidence cases.  
-- URL de-duplication across multi-language variants with site map crawling.
+### 8.1 Technical Risks
+- **LLM server unavailability**: Graceful degradation with heuristics-only mode
+- **Complex SPA navigation**: Focus on traditional HTML sites, log SPA detection
+- **PDF processing failures**: Skip problematic PDFs, log errors
 
+### 8.2 Performance & Quality Risks
+- **Slow website response times**: Configurable timeouts, size limits
+- **False positive menu detection**: Confidence thresholds, manual review process
+- **Language detection errors**: Fallback to heuristics, manual correction

@@ -1,107 +1,239 @@
-# Agentic Menu Extractor (Prototype)
+# Restaurant Menu Extraction System
 
-## What this is
-A prototype agentic menu extraction pipeline:
-- uses Playwright to render pages,
-- extracts menu candidate links,
-- uses a configurable local LLM API to reason and classify menus,
-- outputs `output.json`.
+## **PRE-GENERATED OUTPUT AVAILABLE**
 
-The LLM server is expected to be run separately (local or cloud).
+**This repository contains pre-generated output based on the provided input data. You can find the results in the `output/` folder without needing to run the application yourself.**
 
-## Pre-requisites
-- Docker (optional) or Python 3.9+
-- If running without Docker: `pip install -r requirements.txt` and `playwright install`
-- Local LLM server (recommended options below)
+If you prefer not to set up and run the system, you can directly access the extracted menu data from `output/output.json`.
 
-## Configuration
-The application can be configured via environment variables:
+---
 
-- `MAX_CRAWL_DEPTH`: Maximum crawling depth (default: 3)
-- `NOISE_CONFIDENCE_THRESHOLD`: Threshold for filtering noise links (default: 0.7)
-- `MENU_ITEM_CLASSIFIER_CONFIDENCE_THRESHOLD`: Threshold for menu classification (default: 0.7)
-- `OPENAI_API_BASE`: LLM API base URL (default: http://localhost:1234/v1)
-- `OPENAI_API_KEY`: API key (default: sk-noauth)
-- `OPENAI_MODEL`: Model name (default: gpt-oss-20b)
+## Documentation
 
-## Recommended local LLM options
-1. **Text Generation Inference (TGI) by Hugging Face**
-   - Pros: support for many models, REST API.
-   - Example quick start:
-     - Pull TGI Docker image and run with model: (you must download the model to the server first)
-     - See https://github.com/huggingface/text-generation-inference
-   - Endpoint expected by this repo: `POST http://localhost:8080/generate` with JSON `{ "prompt": "<text>", "max_new_tokens": 512 }` returning `{ "text": "..." }`.
-   - You might need a HF token to download model weights.
+For detailed information about the system, please refer to the documentation in the `/docs` folder:
 
-2. **Ollama** (https://ollama.com) — if installed locally you can host models and it exposes an HTTP API.
+- **[Task Description](docs/task.md)**: Original task requirements and deliverables
+- **[Product Requirements Document](docs/prd.md)**: Complete system requirements and specifications
+- **[Implementation Documentation](docs/implementation.md)**: Technical details, architecture, and current implementation status
+- **[Solution Analysis](docs/options.md)**: Comparison of different approaches and performance analysis
+- **[Agentic AI Documentation](docs/agentic-ai.md)**: Current AI implementation and future agentic AI plans
 
-3. **gpt4all / llama.cpp** adapters — you can create a thin HTTP adapter wrapper if needed.
+## Overview
+An automated system that extracts structured menu information from restaurant websites using a hybrid approach combining heuristics and AI classification. The system crawls restaurant sites, identifies menu pages, classifies menu types and formats, and outputs structured JSON data.
 
-## How to run (using Docker)
-1. Build image:
-   ```bash
-   docker build -t menu-agent .
+## Key Features
+- **Automated Discovery**: Automatically finds menu pages on restaurant websites
+- **Multi-format Support**: Handles PDF, HTML, and embedded menu formats
+- **AI-Powered Classification**: Uses local LLM for menu type and format classification
+- **Cookie Banner Handling**: Automatically detects and handles cookie consent banners
+- **Language Detection**: Identifies menu languages (DE, EN, FR, IT)
+- **Structured Output**: Generates consistent JSON data with menu information
 
+## System Architecture
+The system uses a modular architecture with the following components:
+- **SiteCrawler**: Playwright-based browser automation for website crawling
+- **LinkExtractor**: Heuristic-based link discovery from DOM elements
+- **NoiseClassifier**: AI-powered filtering of non-menu links
+- **MenuClassifier**: AI-powered menu classification and analysis
+- **PageParserFactory**: Routes pages to appropriate parsers (Web, PDF, Image)
 
-## TODO - inlcude in the end version of the documentation
+## System Requirements
 
+### Hardware Requirements
+- **GPU**: Minimum 8GB VRAM (ideally 16GB) for LLM server
+- **RAM**: Minimum 16GB (ideally 64GB) for optimal performance
+  - **Mac**: Mac with 24GB RAM should **theoretically** be sufficient to run both the model and the script
+- **Storage**: ~10GB for models and dependencies
 
-# Future
-* if no menu found, then do the 2nd fallback to the expensive online model like ChatGPT 4.5 etc. (then the fallback stack would look like `heuristics -> local model -> expensive online model`)
+### Software Requirements
+- **Python**: 3.9 or higher
+- **Docker**: Optional, for containerized deployment
+- **Local LLM Server**: Required for AI classification (see setup instructions below)
 
-This prototype runs as a standalone Python script. In production, this would be orchestrated with `n8n` or `Airflow` to schedule regular scrapes, handle retries, and scale horizontall
+### Tested Environment
+- **Windows**: Windows 10, 16GB VRAM, 64GB RAM (validated)
+- **Mac**: Mac with 24GB RAM should **theoretically** be sufficient to run both the model and the script, though this hasn't been tested
 
-* caching is not implemented
+## Quick Start
 
-# Notes on Decisions
-- Heuristics-first → cheapest; agent only when needed (as requested).
-- Depth=2 BFS with menu keyword prioritization to keep crawl bounded.
-- SPA link discovery via onclick, data-href, role="link" in addition to `<a href>`
-- Language loop avoidance via canonicalizing `/de/`, `/en/`, `?lang=de`, etc.
-- No OCR in this test; PDF first-page text only (PyMuPDF).
-- Agent doesn’t drive the browser (keeps implementation simple), but it reasons over crawled artifacts to pick and classify menus, which is enough to show the agentic value add in a test assignment.
-- Sitemap parsing and link extraction - was not validated (the implementation itself, impact) - due to the limited time
+### 1. Set Up Local LLM Server (Required)
+1. Download and install [LM Studio](https://lmstudio.ai/)
+2. Launch LM Studio and go to the "Chats" tab
+3. Download `OpenAI's gpt-oss 20B MXFP4` model (or similar)
+4. Go to the "Developer" tab and click "Start Server"
+5. Server will run on `http://localhost:1234` (default)
 
-- Focus was on readability rather than on performance. Premature optimization is the root of the evil, and I'd start optimizing it once it is a part of a big ecosystem.
+### 2. Set Up Python Environment
 
-# How to run 
-# Requirements
-* LLM Server (a.k.a developer's PC) has a GPU with minimum 8Gb of VRAM (ideally 16Gb), and minimum 16Gb RAM on Windows. In theory, Mac with 24Gb RAM should be sufficient too.
-
-# Pre-requisite: Get a local chat gpt server running.
-The fastest way will be:
-- install LM Studio (from https://lmstudio.ai/)
-- open the LM Studio and install gpt-oss-20b model (`OpenAI's gpt-oss 20B` MXFP4), then pick it on the menu
-- (left hand side menu) click on `Developer`, and then click on `Status: ` to **run** the server.
-
-# Run locally
-
-1) (one time only) Set up virtual python environment. Execute the commands in the root folder of the project:
-```
+#### Windows
+```cmd
+# Create virtual environment
 python -m venv .venv
+
+# Activate environment
 .venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Install Playwright browsers
 playwright install --with-deps
 ```
 
-2) command line:
-Execute the commands in the root folder of the project:
+#### macOS/Linux (not tested)
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate environment
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install Playwright browsers
+playwright install --with-deps
 ```
+
+### 3. Run the Application (Windows)
+
+#### Basic Usage
+```cmd
+# Activate environment (if not already active)
 .venv\Scripts\activate
+
+# Run with default settings
 python -m src.main
 ```
 
-or 
-
-command with line parameters
-
-```
-python -m src.main --input input\restaurants.json --types input\menutypes.json --formats input\menuformat.json --out output\output.json
+#### Custom Input/Output Files
+```cmd
+python -m src.main --input input\restaurants.json --types input\menutypes.json --formats input\menuformats.json --out output\output.json
 ```
 
-# (optionally) Run in a Docker container
+## Configuration
 
+The application can be configured via environment variables:
+
+### Core Settings
+- `MAX_CRAWL_DEPTH`: Maximum crawling depth (default: 3)
+- `NOISE_CONFIDENCE_THRESHOLD`: Threshold for filtering noise links (default: 0.3)
+- `MENU_ITEM_CLASSIFIER_CONFIDENCE_THRESHOLD`: Threshold for menu classification (default: 0.7)
+
+### LLM Server Settings
+- `OPENAI_API_BASE`: LLM API base URL (default: http://localhost:1234/v1)
+- `OPENAI_API_KEY`: API key (default: sk-noauth for local servers)
+- `OPENAI_MODEL`: Model name (default: gpt-oss-20b)
+
+### Performance Settings
+- `MAX_PDF_BYTES`: PDF download limit in bytes (default: 1000000)
+- `MAX_PDF_TEXT_CHARS`: Text extraction limit (default: 3500)
+
+## Docker Deployment
+
+### Build and Run
+```bash
+# Build the Docker image
+docker build -t menu-extractor .
+
+# Run with volume mounts for input/output
+docker run --rm --net=host --env-file .env -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output menu-extractor
 ```
-docker build -t menu-agent .
-docker run --rm --net=host --env-file .env -v $PWD:/app menu-agent
+
+### Docker Compose (Optional)
+Create a `docker-compose.yml` file for easier management:
+```yaml
+version: '3.8'
+services:
+  menu-extractor:
+    build: .
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+    environment:
+      - MAX_CRAWL_DEPTH=3
+      - OPENAI_API_BASE=http://host.docker.internal:1234/v1
+      - OPENAI_MODEL=gpt-oss-20b
 ```
+
+
+## Performance Metrics
+
+### Current Performance (Test Dataset: 14 restaurants)
+- **Total Processing Time**: ~540 seconds (38.6s per restaurant)
+- **Success Rate**: ~85% (12/14 restaurants with menus found)
+- **Menu Detection**: Average 2-3 menus per successful restaurant
+- **Memory Usage**: ~2-4GB RAM during processing
+
+### Optimization Targets
+- **Target Time**: <135 seconds total (<9.6s per restaurant)
+- **Scaling Projections**:
+  - 1K restaurants: ~2.7 hours (optimized) → 32 minutes (with caching)
+  - 10K restaurants: ~26.8 hours (optimized) → 5.4 hours (with caching)
+
+### Optimization Strategies
+1. Replace LLM with fast ML models (Random Forest/LightGBM)
+2. Add more heuristics to reduce AI calls
+3. Implement caching for unchanged sites
+4. Add parallel processing for multiple restaurants
+
+## Input/Output Format
+
+### Input Files
+- `input/restaurants.json`: Restaurant name → URL mapping
+- `input/menutypes.json`: Menu type codes and labels
+- `input/menuformats.json`: Format definitions
+
+### Output Format
+```json
+{
+  "restaurants": [
+    {
+      "name": "restaurant_name",
+      "url": "https://example.com",
+      "cookie_banner_accept": "Accept All",
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://example.com/menu",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": ["de", "en"],
+          "button_text": null,
+          "confidence": 0.85,
+          "notes": "Classification reasoning",
+          "content_disposition": null
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Known Limitations
+
+### Technical Limitations
+- **Image Menus**: No OCR processing for image-based menus
+- **Rate Limiting**: No built-in rate limiting or respectful crawling
+- **Sequential Processing**: No parallel restaurant processing
+- **No Caching**: Re-processes unchanged sites
+
+### Accuracy Limitations
+- **False Positives**: May classify non-menu pages as menus
+- **Language Detection**: Limited to 4 languages (DE/EN/FR/IT)
+- **Format Detection**: Basic format classification without deep analysis
+
+## Future Improvements
+
+- Integrate with database storage
+- Add more sophisticated heuristics to reduce AI calls
+- Improve error handling and retry logic
+- Add progress indicators and better logging
+- Train fast ML models for link classification
+- Implement caching for unchanged sites
+- Add image OCR support for image menus
+- Add distributed processing support
+- Implement web-based review interface
+- Add automated scheduling and updates
