@@ -262,7 +262,7 @@ run-docker.bat          # Windows
 ./run-docker.sh         # Linux/Mac
 ```
 
-### 9.3 Local Development (Windows)
+### [OR] 9.3 Local Development (Windows)
 
 #### 1. Setting up Virtual Environment
 ```cmd
