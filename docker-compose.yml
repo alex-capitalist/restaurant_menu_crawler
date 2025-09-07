@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  tastematch:
+    build: .
+    container_name: tastematch-crawler
+    volumes:
+      # Mount input and output directories for easy access
+      - ./input:/app/input:ro
+      - ./output:/app/output
+      - ./prompts:/app/prompts:ro
+    environment:
+      # Override these if your model runs on a different host/port
+      - OPENAI_API_BASE=http://host.docker.internal:1234/v1
+      - OPENAI_API_KEY=sk-noauth
+      - OPENAI_MODEL=gpt-oss-20b
+      # Optional: Configure crawl depth
+      - MAX_CRAWL_DEPTH=3
+    # Use host networking to access localhost services
+    network_mode: host
+    # Alternative: Use bridge network with host.docker.internal
+    # networks:
+    #   - tastematch-network
+
+# Uncomment if using bridge networking instead of host networking
+# networks:
+#   tastematch-network:
+#     driver: bridge
