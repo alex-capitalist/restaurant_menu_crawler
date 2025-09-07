@@ -1,0 +1,773 @@
+{
+  "restaurants": [
+    {
+      "name": "chez_smith",
+      "url": "https://chez-smith.ch/de/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://chez-smith.ch/de/menue/",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.85,
+          "notes": "Page lists lunch, dinner, tapas and wine menus with headings in German and English.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://media.chez-smith.ch/filer_public/30/75/3075f0a2-55f6-4ffc-8112-a824fb8c3fe0/2025-03-28_chez_smith_wine_list.pdf",
+          "type_code": "oct_wine",
+          "type_label": "Wines",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains a wine list in German and English.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://media.chez-smith.ch/filer_public/cf/72/cf725210-7307-44d3-b0d5-84ec86d269be/2025-09-08_a4_lunch_selection.pdf",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF lists lunch and dinner items mainly in German, with some Italian terms.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://media.chez-smith.ch/filer_public/ab/94/ab94ad75-33df-4dd2-bed0-edb9089af86f/2025-09-03_a4_menukarte_dinner.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains a dinner menu written mainly in German with some Italian terms.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://media.chez-smith.ch/filer_public/a8/43/a843e62d-ab17-4418-94d5-31176bb78958/2025-09-03_a4_menukarte_dinner_en.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "en",
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains a dinner menu in English (with German title), matching oct_dinner type.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://media.chez-smith.ch/filer_public/cb/b8/cbb8f30d-d0b1-4f49-82dc-72e176a6bdaa/weinkarte_chez_smith_03092025_homepage.pdf",
+          "type_code": "oct_wine",
+          "type_label": "Wines",
+          "format": "pdf",
+          "languages": [
+            "en",
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.96,
+          "notes": "PDF contains a wine list description, matching the wine menu type.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "La_Catedral",
+      "url": "https://www.lacatedral.ch/menu",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://www.lacatedral.ch/menu",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "integrated",
+          "languages": [
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.6,
+          "notes": "Page contains drink categories and menu headings but no PDF or image, so it is an integrated drinks menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.lacatedral.ch/_files/ugd/f728f6_903a8e63ab654999a4d06bf473162a4c.pdf",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "pdf",
+          "languages": [
+            "en",
+            "fr"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF named \"Cocktail Menu\" indicates a drinks menu.",
+          "content_disposition": "inline; filename=\"Cocktail%20Menu%20Summer%20%2725%20-%20La%20Catedral.pdf\"; filename*=UTF-8''Cocktail%20Menu%20Summer%20%2725%20-%20La%20Catedral.pdf"
+        },
+        {
+          "link": "https://www.lacatedral.ch/_files/ugd/f728f6_60a2bf8cc8ad4224b3c8129182a87777.pdf",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "pdf",
+          "languages": [],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains clear food item listings typical of a restaurant menu.",
+          "content_disposition": "inline; filename=\"Antojitos%20%26%20Beverages%20Menu%20-%20La%20Catedral.pdf\"; filename*=UTF-8''Antojitos%20%26%20Beverages%20Menu%20-%20La%20Catedral.pdf"
+        },
+        {
+          "link": "https://www.lacatedral.ch/_files/ugd/f728f6_5ae9b78a73524ae4bb2dff337ce3c2b2.pdf",
+          "type_code": "oct_brunch",
+          "type_label": "Brunch",
+          "format": "pdf",
+          "languages": [
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.9,
+          "notes": "PDF titled \"Menu\" with filename indicating a brunch menu.",
+          "content_disposition": "inline; filename=\"Brunch%20Mexicano.pdf\"; filename*=UTF-8''Brunch%20Mexicano.pdf"
+        }
+      ]
+    },
+    {
+      "name": "lulu",
+      "url": "https://www.lulu-zh.ch/de/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://www.lulu-zh.ch/de/restaurant/",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "en",
+            "fr"
+          ],
+          "button_text": null,
+          "confidence": 0.6,
+          "notes": "Page lists menu sections (Speisekarte, Weinkarte, Barkarte) but contains no actual items or PDF links, indicating an integrated menu page.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.lulu-zh.ch/media/lulu_speisekarte_restaurant_a3_de_210725.pdf",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "fr"
+          ],
+          "button_text": null,
+          "confidence": 0.99,
+          "notes": "PDF contains a full list of dishes and prices in German and French, typical menu content.",
+          "content_disposition": "inline; filename=\"lulu_speisekarte_restaurant_a3_de_210725.pdf\";"
+        },
+        {
+          "link": "https://www.lulu-zh.ch/media/lulu_weinkarte-de.pdf",
+          "type_code": "oct_wine",
+          "type_label": "Wines",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains a wine menu (WEIN) in German.",
+          "content_disposition": "inline; filename=\"lulu_weinkarte-de.pdf\";"
+        },
+        {
+          "link": "https://www.lulu-zh.ch/media/lulu_barkarte-de.pdf",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "fr",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains extensive list of cocktails and drinks, typical of a bar menu.",
+          "content_disposition": "inline; filename=\"lulu_barkarte-de.pdf\";"
+        },
+        {
+          "link": "https://www.lulu-zh.ch/media/lulu_speisekarte_cafe-de.pdf",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "pdf",
+          "languages": [
+            "fr",
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains beverage listings with French headings and German terms, matching a drinks menu.",
+          "content_disposition": "inline; filename=\"lulu_speisekarte_cafe-de.pdf\";"
+        }
+      ]
+    },
+    {
+      "name": "Hermanseck",
+      "url": "https://www.hermanseck.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://www.hermanseck.ch/",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.92,
+          "notes": "\"Mittag PDF\" link indicates a lunch menu in German.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.hermanseck.ch/Dateien/Speisen/Mittagsangebot/Mittag KW 37.pdf",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF lists lunch dishes in German",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.hermanseck.ch/Dateien/Speisen/Abendangebot/Abendangebot.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "German menu in a PDF file with dish names and prices",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.hermanseck.ch/Dateien/Getränke/Getränkekarte.pdf",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF file named \"Getränkekarte.pdf\" clearly represents a drinks menu in German.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.hermanseck.ch/Dateien/Speisen/Wildangebot/Wildangebot_2024_2025.pdf",
+          "type_code": "oct_season",
+          "type_label": "Season offer",
+          "format": "pdf",
+          "languages": [
+            "de",
+            "fr"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains dishes and prices in German/French, typical of a seasonal restaurant menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://www.hermanseck.ch/Dateien/Speisen/Tonhalle/Tonhalle_Winter_2024_2025.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains German menu for dinner event",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Bottega_Berta",
+      "url": "https://bottegaberta.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://bottegaberta.ch/zmittag/",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists lunch dishes and prices directly, indicating a lunch menu in German/Italian.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://bottegaberta.ch/znacht/",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists dishes and prices for a dinner menu in German/Italian.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://bottegaberta.ch/brunch/",
+          "type_code": "oct_brunch",
+          "type_label": "Brunch",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists brunch dishes, drinks and prices in German/Italian.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://bottegaberta.ch/zmittag/#content",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "it"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists lunch items with prices, typical menu content.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Miki",
+      "url": "http://miki.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "http://miki.ch/media/site/a7b3e32ca6-1718014769/miki-menu-web-06-24.pdf",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains dish listings and prices in German.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Asia_Restaurant_Lee_House",
+      "url": "http://www.leehouse.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "http://www.leehouse.ch/menu.html",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists food categories and priced items in German, clearly a restaurant menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.leehouse.ch/menu.html#sushi",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists numerous dishes with prices, typical of a dinner menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.leehouse.ch/menu.html#dessert",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Full menu text in German on the page.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.leehouse.ch/menu.html#main",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists a complete dinner menu in German directly on the page.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.leehouse.ch/menu.html#starter",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "Page lists full menu with categories and items, typical dinner menu.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Daizy",
+      "url": "http://www.daizy.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "http://www.daizy.ch/",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.65,
+          "notes": "Page describes the current evening menu in German, but no separate list or PDF is present.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Gamper_Restaurant",
+      "url": "http://gamper-restaurant.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://gamper-restaurant.ch/wermuteria",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "image",
+          "languages": [
+            "de"
+          ],
+          "button_text": "",
+          "confidence": 0.9,
+          "notes": null,
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Neue_Taverne",
+      "url": "https://neuetaverne.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://neuetaverne.ch/media/tav250731_abend_de_1.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "German PDF containing dish names and prices – a dinner menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://neuetaverne.ch/media//tav_250725_business_lunch_de_.pdf",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF contains a lunch menu in German.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://neuetaverne.ch/media//tav250731_abend_de.pdf",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "German PDF containing food and drink prices, clearly a dinner menu",
+          "content_disposition": null
+        },
+        {
+          "link": "https://neuetaverne.ch/media//tav250521_weinkarte_.pdf",
+          "type_code": "oct_wine",
+          "type_label": "Wines",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF titled \"Weinkarte\" – a German wine menu.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://neuetaverne.ch/media//tav250514_getraenkekarte_.pdf",
+          "type_code": "oct_drink",
+          "type_label": "Drinks menu",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.98,
+          "notes": "PDF contains a drink list in German.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Wirtschaft_im_Franz",
+      "url": "http://www.wirtschaftimfranz.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "http://www.wirtschaftimfranz.ch/menu",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.92,
+          "notes": "Page contains a full dinner menu in German, presented directly on the page.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.wirtschaftimfranz.ch/menu#page",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.92,
+          "notes": "Page contains a detailed dinner menu with courses and prices.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Barranco",
+      "url": "http://www.barranco.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://www.barranco.ch/_files/ugd/2058e9_d0a6e17848d249a18d92980e0a7b028e.pdf",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF titled \"Menu (deutsch)\" with German text, indicating a restaurant menu.",
+          "content_disposition": "inline; filename=\"Barranco%20-%20Menu%20%28deutsch%29%20%2817%29.pdf\"; filename*=UTF-8''Barranco%20-%20Menu%20%28deutsch%29%20%2817%29.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Gül_Restoran",
+      "url": "http://www.guel.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "http://www.guel.ch/",
+          "type_code": "oct_dinner",
+          "type_label": "Dinner",
+          "format": "integrated",
+          "languages": [
+            "de",
+            "en"
+          ],
+          "button_text": null,
+          "confidence": 0.92,
+          "notes": "Page contains a \"Menü Abend\" section with dinner items.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.guel.ch#guel-bar",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.6,
+          "notes": "Page lists dinner and brunch sections with descriptions but no separate PDF or detailed items, indicating an integrated menu page.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.guel.ch/media/pages/restoran/0a8b2aada4-1756997421/20250904_speisekarte_menu_abend_-weinkarte-2-2-2.pdf",
+          "type_code": "oct_wine",
+          "type_label": "Wines",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF file named with speisekarte and weinkarte indicates a wine menu in German.",
+          "content_disposition": null
+        },
+        {
+          "link": "http://www.guel.ch/media/pages/restoran/67b5c61340-1755345948/20250816_brunch_menukarte-2.pdf",
+          "type_code": "oct_brunch",
+          "type_label": "Brunch",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF titled as brunch menu with German text.",
+          "content_disposition": null
+        }
+      ]
+    },
+    {
+      "name": "Kultur_Lokal_Rank",
+      "url": "https://amrank.ch/",
+      "cookie_banner_accept": null,
+      "status": "ok",
+      "warnings": [],
+      "menus": [
+        {
+          "link": "https://amrank.ch/essen-und-trinken/",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "integrated",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.6,
+          "notes": "Page lists lunch and dinner sections but no actual items, indicating an integrated menu page in German.",
+          "content_disposition": null
+        },
+        {
+          "link": "https://amrank.ch/assets/downloads/menu/05062025_Rank_Sommer_2025_DE.pdf",
+          "type_code": "oct_menu",
+          "type_label": "Menu",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "German PDF containing full food and drink list",
+          "content_disposition": null
+        },
+        {
+          "link": "https://amrank.ch/assets/downloads/menu/050525_Rank_Sommer_2025-LUNCH_DE.pdf",
+          "type_code": "oct_lunch",
+          "type_label": "Lunch",
+          "format": "pdf",
+          "languages": [
+            "de"
+          ],
+          "button_text": null,
+          "confidence": 0.95,
+          "notes": "PDF file with German lunch menu items",
+          "content_disposition": null
+        }
+      ]
+    }
+  ]
+}

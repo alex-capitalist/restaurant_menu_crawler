@@ -2,7 +2,6 @@
 artifacts/
 src/__pycache__/
 tests/__pycache__/
-output.json
 .env
 .DS_Store
 .env.local
