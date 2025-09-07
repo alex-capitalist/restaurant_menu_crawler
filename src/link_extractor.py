@@ -1,17 +1,12 @@
 from typing import List, Optional, Set, Dict, Tuple
 from .models import LinkInfo, MenuItem
 from .agent import NoiseClassifier
-from .utils import normalize_url, same_domain, canonicalize_language, deduplicate_by_key
-from playwright.sync_api import sync_playwright, Page
+from .utils import normalize_url, is_same_domain, deduplicate_by_key
+from playwright.sync_api import Page
 import re
 import os
-from .sitemap_handler import SitemapHandler
-from .cookie_detector import CookieDetector
-from .models import CrawlTask, LinkInfo, PageRecord
+from .models import CrawlTask, LinkInfo
 from bs4 import BeautifulSoup
-import fitz
-import requests
-import io
 
 class LinkExtractor:
     """
@@ -81,7 +76,7 @@ class LinkExtractor:
             lambda link: link.url
         )
 
-    def extract_links(self, page: Page, task: CrawlTask) -> List[LinkInfo]:
+    def extract(self, page: Page, task: CrawlTask) -> List[LinkInfo]:
         # 1) Is the current nested level is the deepest level?
         #   yes: return empty list
         if task.depth > self.max_depth:
@@ -97,7 +92,7 @@ class LinkExtractor:
         all_links = links + pdf_links
         same_domain_links = []
         for link in all_links:
-            if same_domain(task.url, link.url):
+            if is_same_domain(task.url, link.url):
                 same_domain_links.append(link)
 
         # deduplicate the links
@@ -107,7 +102,7 @@ class LinkNoiseFilter:
     def __init__(self):
         self._noise_classifier = NoiseClassifier()
 
-    def filter_links(self, links: List[LinkInfo]) -> List[LinkInfo]:
+    def filter(self, links: List[LinkInfo]) -> List[LinkInfo]:
         # brute force heuristics to filter out sure non-menu links
         exclude_patterns = [
             "grundriss", "floor", "plan", "layout", "map", 

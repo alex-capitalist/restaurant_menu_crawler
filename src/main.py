@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, sys
+import argparse, sys, time
 from typing import List
 from .input_manager import load_inputs
 from .crawler import SiteCrawler
@@ -17,6 +17,8 @@ def map_type_label(code: str, menutypes: dict) -> str:
     return menutypes.get(code, code)
 
 def main():
+    start_time = time.time()
+    
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", default="input/restaurants.json")
     ap.add_argument("--types", default="input/menutypes.json")
@@ -45,7 +47,11 @@ def main():
         results.append(res)
 
     save_results(args.out, results)
+    
+    end_time = time.time()
+    duration = end_time - start_time
     print(f"\n(I hope) Done. Saved in {args.out}")
+    print(f"Total operation time: {duration:.2f} seconds")
 
 if __name__ == "__main__":
     sys.exit(main())

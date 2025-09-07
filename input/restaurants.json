@@ -1,12 +1,18 @@
 {
   "Restaurants": {
-    "Asia_Restaurant_Lee_House": "http://www.leehouse.ch/",
+        "chez_smith": "https://chez-smith.ch/de/",
+        "La_Catedral": "https://www.lacatedral.ch/menu",
+        "lulu": "https://www.lulu-zh.ch/de/",
+        "Hermanseck": "https://www.hermanseck.ch/",
+        "Bottega_Berta": "https://bottegaberta.ch/",
+        "Miki": "http://miki.ch/",
+        "Asia_Restaurant_Lee_House": "http://www.leehouse.ch/",
         "Daizy": "http://www.daizy.ch/",
         "Gamper_Restaurant": "http://gamper-restaurant.ch/",
         "Neue_Taverne": "https://neuetaverne.ch/",
         "Wirtschaft_im_Franz": "http://www.wirtschaftimfranz.ch/",
         "Barranco": "http://www.barranco.ch/",
         "Gül_Restoran": "http://www.guel.ch/",
-        "Kultur_Lokal_Rank": "https://amrank.ch/"  
+        "Kultur_Lokal_Rank": "https://amrank.ch/"
   }
 }

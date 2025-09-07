@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple, Optional
 from playwright.sync_api import sync_playwright, Page
 from bs4 import BeautifulSoup
 import re, time, urllib.parse
-from .utils import normalize_url, same_domain, canonicalize_language
+from .utils import normalize_url, is_same_domain, canonicalize_language
 # Removed non-existent classifier import
 from .models import CrawlTask, LinkInfo, PageRecord
 
@@ -54,7 +54,7 @@ class SitemapHandler:
                 url_pattern = r'https?://[^\s<>"\']+'
                 found_urls = re.findall(url_pattern, content)
                 for url in found_urls:
-                    if same_domain(base_url, url):
+                    if is_same_domain(base_url, url):
                         urls.append((url, "regex_fallback"))
                     
         except Exception as e:
@@ -65,7 +65,7 @@ class SitemapHandler:
                 url_pattern = r'https?://[^\s<>"\']+'
                 found_urls = re.findall(url_pattern, content)
                 for url in found_urls:
-                    if same_domain(base_url, url):
+                    if is_same_domain(base_url, url):
                         urls.append((url, "regex_fallback"))
             except Exception:
                 pass
@@ -174,7 +174,7 @@ class SitemapHandler:
         # Filter to same domain and canonicalize
         filtered_urls = []
         for url, text in discovered_urls:
-            if same_domain(base_url, url):
+            if is_same_domain(base_url, url):
                 canonical_url = canonicalize_language(url)
                 filtered_urls.append((canonical_url, text))
         

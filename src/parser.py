@@ -107,14 +107,11 @@ class PDFPageParser(PageParserBase):
         """
         max_bytes = max_bytes or int(os.getenv("MAX_PDF_BYTES", 1_000_000))
         try:
-            print(f"DEBUG: Downloading PDF (max {max_bytes} bytes)...")
             r = requests.get(pdf_url, stream=True, timeout=timeout)
             r.raise_for_status()
             
             # Capture Content-Disposition header
             content_disposition = r.headers.get('Content-Disposition')
-            if content_disposition:
-                print(f"DEBUG: Content-Disposition header: {content_disposition}")
             
             content = io.BytesIO()
             read = 0
@@ -127,16 +124,11 @@ class PDFPageParser(PageParserBase):
                     break
             content.seek(0)
             pdf_bytes = content.read()
-            print(f"DEBUG: Downloaded {read} bytes, PDF bytes length: {len(pdf_bytes)}")
-            print(f"DEBUG: First 100 bytes: {pdf_bytes[:100]}")
             
             # Try opening with fitz
             try:
                 with fitz.open(stream=pdf_bytes, filetype="pdf") as doc:
-                    print(f"DEBUG: PDF opened successfully, page count: {doc.page_count}")
-                    print(f"DEBUG: PDF metadata: {doc.metadata}")
                     if doc.page_count == 0:
-                        print("DEBUG: PDF has 0 pages, trying alternative approach...")
                         # Try to get any text from the document
                         try:
                             # Sometimes PDFs have text but 0 pages reported
@@ -146,35 +138,30 @@ class PDFPageParser(PageParserBase):
                                     page_text = doc.load_page(page_num).get_text("text")
                                     if page_text:
                                         full_text += page_text + "\n"
-                                        print(f"DEBUG: Found text on page {page_num}: {len(page_text)} chars")
                                 except Exception as e:
-                                    print(f"DEBUG: Error loading page {page_num}: {e}")
+                                    print(f"Error loading page {page_num}: {e}")
                             if full_text.strip():
-                                print(f"DEBUG: Alternative method found {len(full_text)} characters")
                                 return full_text[:3500], content_disposition  # Apply our 3.5K limit
                         except Exception as e:
-                            print(f"DEBUG: Alternative method failed: {e}")
+                            print(f"Error: Error loading page {page_num}: {e}")
                         return "", content_disposition
                     else:
-                        print("DEBUG: Extracting text from first page...")
                         txt = doc.load_page(0).get_text("text") or ""
-                        print(f"DEBUG: Extracted {len(txt)} characters of text")
                         
                         # small safety cap
                         max_chars = int(os.getenv("MAX_PDF_TEXT_CHARS", 3500))
                         if len(txt) > max_chars:
-                            print(f"DEBUG: Truncating text from {len(txt)} to {max_chars} characters")
                             txt = txt[:max_chars]
 
-                        print(f"****** Extracted PDF text from {pdf_url}:")
-                        print("-" * 50)
-                        print(txt)
-                        print("-" * 50)
-                        print(f"++++++++++++")
+                        print(f"[PDF PageParser] Extracted PDF text from {pdf_url}:")
+                        # print("-" * 50)
+                        # print(txt)
+                        # print("-" * 50)
+                        # print(f"[PDF PageParser] ----------------------------")
                     
                         return txt, content_disposition
             except Exception as e:
-                print(f"DEBUG: Error opening PDF with fitz: {e}")
+                print(f"[PDF PageParser] Error opening PDF with fitz: {e}")
                 return "", content_disposition
         except Exception as e:
             print(f"Error: Failed to extract text from PDF: {pdf_url}")

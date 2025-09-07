@@ -8,7 +8,7 @@ LANG_QUERY = re.compile(r"[?&](lang|language)=(de|en|fr|it)\b", re.IGNORECASE)
 def normalize_url(base: str, url: str) -> str:
     return urllib.parse.urljoin(base, url)
 
-def same_domain(root: str, url: str) -> bool:
+def is_same_domain(root: str, url: str) -> bool:
     r = urllib.parse.urlparse(root)
     u = urllib.parse.urlparse(url)
     

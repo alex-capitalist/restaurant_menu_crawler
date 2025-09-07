@@ -1,13 +1,13 @@
 from typing import List, Optional, Set, Dict, Tuple
 from .models import LinkInfo, MenuItem
-from .utils import normalize_url, same_domain, canonicalize_language, deduplicate_by_key
+from .utils import normalize_url, is_same_domain, canonicalize_language, deduplicate_by_key
 from playwright.sync_api import sync_playwright, Page
 import re
 import os
+import time
 from .sitemap_handler import SitemapHandler
 from .cookie_detector import CookieDetector
 from .models import CrawlTask, LinkInfo, PageRecord
-from bs4 import BeautifulSoup
 import os
 
 from .link_extractor import LinkExtractor, LinkNoiseFilter
@@ -81,6 +81,16 @@ class SiteCrawler:
                 
         return True  # This is a web page
 
+    def _filter_unvisited_links(self, extracted_links: List[LinkInfo]) -> List[LinkInfo]:
+        """Filter out already processed links (both queued and visited)"""
+        unvisited_links = []
+        for link in extracted_links:
+            norm_url = canonicalize_language(link.url)
+            if norm_url not in self._seen_links:
+                self._seen_links.add(norm_url)
+                unvisited_links.append(link)
+        return unvisited_links
+
     def _exclude_child_pages(self, menu_items: List[MenuItem], current_depth: int):
         """Exclude child pages only if we find specific menu types, not generic menus"""
         for item in menu_items:
@@ -97,20 +107,24 @@ class SiteCrawler:
                 self._visited_links.add(canonicalize_language(item.link))
 
     def crawl_site(self):
+        start_time = time.time()
+        
         sitemap_handler = SitemapHandler()
         # We need to create a page first to call discover_sitemap_urls
         # For now, we'll skip sitemap discovery and just use the initial URL
         sitemap_urls = []
 
-        # TODO: we seem not using sitemap URLs at all
+        # TODO: add the sitemap URLs to the queue - should be done in the future
         # Potentially too heavy operation, since the website could have a lot of sitemap URLs
         # we can limit the number of sitemap URLs to be crawled
         # or we can limit the nested level of the sitemap URLs
-        for url, text in sitemap_urls:
-            self._queue.append(CrawlTask(url=url, depth=1, call_stack=[]))
+
+        # sitemap_urls = sitemap_handler.discover_sitemap_urls(page, self.restaurant_url)        
+        # for url, text in sitemap_urls:
+        #     self._queue.append(CrawlTask(url=url, depth=1, call_stack=[]))
 
         with sync_playwright() as p:
-            print(f"Launching browser....")
+            print(f"[Crawler] Launching browser....")
 
 
             browser = p.chromium.launch(headless=True)
@@ -147,42 +161,33 @@ class SiteCrawler:
                     # Detect cookie banner accept button (once)
                     self._detect_cookie_accept_button(page)
 
-                    extracted_links = self._link_extractor.extract_links(page, task)
+                    extracted_links = self._link_extractor.extract(page, task)
+                    print(f"[Crawler] Extracted {len(extracted_links)} links")
 
-                    print(f"****** Extracted links: {len(extracted_links)}")
-                    print("***********")
-                    
                     # Filter out already processed links (both queued and visited)
-                    unvisited_links = []
-                    for link in extracted_links:
-                        norm_url = canonicalize_language(link.url)
-                        if norm_url not in self._seen_links:
-                            self._seen_links.add(norm_url)
-                            unvisited_links.append(link)
-                    extracted_links = unvisited_links
+                    extracted_links = self._filter_unvisited_links(extracted_links)
 
-                    filtered_links = self._link_noise_filter.filter_links(extracted_links)
+                    filtered_links = self._link_noise_filter.filter(extracted_links)
                     # crawl the unvisited links
                     for link in filtered_links:
+                        print(f"[Crawler] Queued link: {link.url}")
                         candidate_task = CrawlTask(
                             url=link.url, 
                             depth=task.depth + 1, 
                             call_stack=current_call_stack
                         )
                         self._queue.append(candidate_task)
-                        print(f"****** Queued link: {link.url}")
 
-                print(f"~~~~~~~~ current queued links: {self._queue}")
-
-
-                print(f"+++++ get parser link: {task.url}")
+                print(f"[Crawler] Processing link: {task.url}")
                 candidate_page_parser = self._page_parser_factory.get_parser(page, task)
                 menu_item = candidate_page_parser.parse()
                 if menu_item:
                     self._menu_items.append(menu_item)
-                    # print(f"+++++ menu item: {menu_item.link}")
-                    # self._exclude_child_pages([menu_item], task.depth)
 
                 self._deduplicate_menu_items()
             
                 self._visited_links.add(norm_url)
+        
+        end_time = time.time()
+        duration = end_time - start_time
+        print(f"[Crawler] Completed crawling {self.restaurant_name} in {duration:.2f} seconds")

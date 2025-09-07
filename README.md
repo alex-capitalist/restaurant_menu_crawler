@@ -60,6 +60,7 @@ This prototype runs as a standalone Python script. In production, this would be 
 - Language loop avoidance via canonicalizing `/de/`, `/en/`, `?lang=de`, etc.
 - No OCR in this test; PDF first-page text only (PyMuPDF).
 - Agent doesn’t drive the browser (keeps implementation simple), but it reasons over crawled artifacts to pick and classify menus, which is enough to show the agentic value add in a test assignment.
+- Sitemap parsing and link extraction - was not validated (the implementation itself, impact) - due to the limited time
 
 - Focus was on readability rather than on performance. Premature optimization is the root of the evil, and I'd start optimizing it once it is a part of a big ecosystem.
 

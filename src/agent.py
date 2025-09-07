@@ -42,9 +42,6 @@ class NoiseClassifier(AgentBase):
     def classify(self, links: List[LinkInfo]) -> List[LinkInfo]:
         # Process links in batches of 20 (otherwise we will exceed the context)
 
-        print(f"Classifying links...")
-        print(f"Links: {links}")
-
         result_links = []
         batch_size = 20
         
@@ -74,9 +71,6 @@ class NoiseClassifier(AgentBase):
                 
                 data = json.loads(raw)
                 classified_links = data.get("links", [])
-
-                print(f"Classified links: {classified_links}")
-
                 
                 # Process each link in the batch
                 for j, link_data in enumerate(classified_links):
