@@ -43,7 +43,8 @@ if /i not "%continue%"=="y" (
 )
 
 echo [info] Building Docker image...
-%COMPOSE_CMD% build
+echo [info] Use --no-cache flag to force rebuild without cache
+%COMPOSE_CMD% build --no-cache
 
 echo [info] Starting MenuCrawler...
 %COMPOSE_CMD% up

@@ -34,6 +34,13 @@ if errorlevel 1 (
     echo [info] Image 'menucrawler:latest' removed
 )
 
+REM Force remove all images with menucrawler in the name
+echo Removing all MenuCrawler related images...
+for /f "tokens=3" %%i in ('docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}" ^| findstr /i menucrawler') do (
+    docker rmi -f %%i >nul 2>&1
+    echo [info] Removed image %%i
+)
+
 REM Remove any dangling images related to this project
 echo Cleaning up dangling images...
 docker image prune -f >nul 2>&1
