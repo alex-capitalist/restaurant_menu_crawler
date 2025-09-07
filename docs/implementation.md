@@ -236,13 +236,33 @@ MAX_PDF_TEXT_CHARS=3500                       # Text extraction limit
 
 ## 9. Deployment & Usage
 
-### 9.1 Docker Deployment
+### 9.1 LLM Server Setup
+
+#### Download and Install LM Studio
+1. Download LM Studio from: https://lmstudio.ai/
+2. Install and launch the application
+3. On the "Chats" tab pick `OpenAI's gpt-oss 20B MXFP4` (or similar, but the model name should be reflected in the respective .env parameters).
+
+#### Starting the Local Server
+1. In LM Studio, go to the "Developer" tab
+3. Click "Start Server" 
+4. The server will start on `http://localhost:1234` (default port)
+5. Verify the server is running by visiting `http://localhost:1234/v1/models` in your browser
+
+#### Configuration
+- The default configuration works with the system's environment variables
+- No API key required for local server (use `sk-noauth` as placeholder)
+
+
+### 9.2 Docker Deployment (Recommended)
+
 ```bash
-docker build -t menu-extractor .
-docker run -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output menu-extractor
+# Quick start
+run-docker.bat          # Windows
+./run-docker.sh         # Linux/Mac
 ```
 
-### 9.2 Local Development (Windows)
+### 9.3 Local Development (Windows)
 
 #### 1. Setting up Virtual Environment
 ```cmd
@@ -264,22 +284,6 @@ Given that input data is in `./input` and output data will be placed to `./outpu
 python -m src.main 
 ```
 
-### 9.3 LLM Server Setup
-
-#### Download and Install LM Studio
-1. Download LM Studio from: https://lmstudio.ai/
-2. Install and launch the application
-3. On the "Chats" tab pick `OpenAI's gpt-oss 20B MXFP4` (or similar, but the model name should be reflected in the respective .env parameters).
-
-#### Starting the Local Server
-1. In LM Studio, go to the "Developer" tab
-3. Click "Start Server" 
-4. The server will start on `http://localhost:1234` (default port)
-5. Verify the server is running by visiting `http://localhost:1234/v1/models` in your browser
-
-#### Configuration
-- The default configuration works with the system's environment variables
-- No API key required for local server (use `sk-noauth` as placeholder)
 
 ---
 

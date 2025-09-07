@@ -1,6 +1,6 @@
-# Docker Setup for TasteMatch
+# Docker Setup for MenuCrawler
 
-This guide explains how to run TasteMatch in a Docker container, especially when using a local AI model.
+This guide explains how to run MenuCrawler in a Docker container, especially when using a local AI model.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ This guide explains how to run TasteMatch in a Docker container, especially when
 
 1. **Build the image**:
    ```bash
-   docker build -t tastematch .
+   docker build -t menucrawler .
    ```
 
 2. **Run with host networking** (to access localhost):
@@ -41,7 +41,7 @@ This guide explains how to run TasteMatch in a Docker container, especially when
      -v $(pwd)/output:/app/output \
      -v $(pwd)/prompts:/app/prompts:ro \
      -e OPENAI_API_BASE=http://localhost:1234/v1 \
-     tastematch
+     menucrawler
    ```
 
 3. **Or run with bridge networking** (using host.docker.internal):
@@ -51,7 +51,7 @@ This guide explains how to run TasteMatch in a Docker container, especially when
      -v $(pwd)/output:/app/output \
      -v $(pwd)/prompts:/app/prompts:ro \
      -e OPENAI_API_BASE=http://host.docker.internal:1234/v1 \
-     tastematch
+     menucrawler
    ```
 
 ## Configuration
@@ -182,7 +182,7 @@ docker-compose -f docker-compose.dev.yml up
 # Run with shell access
 docker run -it --network host \
   -v $(pwd):/app \
-  tastematch /bin/bash
+  menucrawler /bin/bash
 
 # Check logs
 docker-compose logs -f

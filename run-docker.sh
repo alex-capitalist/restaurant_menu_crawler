@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# TasteMatch Docker Runner
-# This script makes it easy to run TasteMatch in Docker with a local AI model
+# MenuCrawler Docker Runner
+# This script makes it easy to run MenuCrawler in Docker with a local AI model
 
 set -e
 
@@ -12,12 +12,12 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}🍽️  TasteMatch Docker Runner${NC}"
+echo -e "${BLUE}  MenuCrawler Docker Runner${NC}"
 echo "=================================="
 
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
-    echo -e "${RED}❌ Docker is not running. Please start Docker first.${NC}"
+    echo -e "${RED} Docker is not running. Please start Docker first.${NC}"
     exit 1
 fi
 
@@ -27,7 +27,7 @@ if command -v docker-compose > /dev/null 2>&1; then
 elif docker compose version > /dev/null 2>&1; then
     COMPOSE_CMD="docker compose"
 else
-    echo -e "${RED}❌ Neither docker-compose nor 'docker compose' is available.${NC}"
+    echo -e "${RED} Neither docker-compose nor 'docker compose' is available.${NC}"
     exit 1
 fi
 
@@ -51,15 +51,15 @@ MODEL_FOUND=false
 MODEL_URL=""
 
 if check_port 1234; then
-    echo -e "${GREEN}✅ Found service on port 1234 (likely LM Studio)${NC}"
+    echo -e "${GREEN} Found service on port 1234 (likely LM Studio)${NC}"
     MODEL_FOUND=true
     MODEL_URL="http://localhost:1234/v1"
 elif check_port 11434; then
-    echo -e "${GREEN}✅ Found service on port 11434 (likely Ollama)${NC}"
+    echo -e "${GREEN} Found service on port 11434 (likely Ollama)${NC}"
     MODEL_FOUND=true
     MODEL_URL="http://localhost:11434/v1"
 elif check_port 8000; then
-    echo -e "${GREEN}✅ Found service on port 8000${NC}"
+    echo -e "${GREEN} Found service on port 8000${NC}"
     MODEL_FOUND=true
     MODEL_URL="http://localhost:8000/v1"
 else
@@ -79,14 +79,14 @@ fi
 # Set environment variables
 if [ "$MODEL_FOUND" = true ]; then
     export OPENAI_API_BASE="$MODEL_URL"
-    echo -e "${GREEN}🔧 Using model URL: $MODEL_URL${NC}"
+    echo -e "${GREEN} Using model URL: $MODEL_URL${NC}"
 fi
 
 # Build and run
-echo -e "${BLUE}🏗️  Building Docker image...${NC}"
+echo -e "${BLUE} Building Docker image...${NC}"
 $COMPOSE_CMD build
 
-echo -e "${BLUE}🚀 Starting TasteMatch crawler...${NC}"
+echo -e "${BLUE} Starting MenuCrawler...${NC}"
 $COMPOSE_CMD up
 
-echo -e "${GREEN}✅ Done! Check ./output/output.json for results.${NC}"
+echo -e "${GREEN} Done! Check ./output/output.json for results.${NC}"

@@ -63,7 +63,13 @@ The system uses a modular architecture with the following components:
 4. Go to the "Developer" tab and click "Start Server"
 5. Server will run on `http://localhost:1234` (default)
 
-### 2. Set Up Python Environment
+
+### Option A: Docker (Recommended)
+1. Start your local AI model server (e.g., LM Studio)
+2. Run: `run-docker.bat` (Windows) or `./run-docker.sh` (Linux/Mac)
+3. Check results in `output/output.json`
+
+### Option B: Local Python Environment
 
 #### Windows
 ```cmd
@@ -129,32 +135,6 @@ The application can be configured via environment variables:
 - `MAX_PDF_BYTES`: PDF download limit in bytes (default: 1000000)
 - `MAX_PDF_TEXT_CHARS`: Text extraction limit (default: 3500)
 
-## Docker Deployment
-
-### Build and Run
-```bash
-# Build the Docker image
-docker build -t menu-extractor .
-
-# Run with volume mounts for input/output
-docker run --rm --net=host --env-file .env -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output menu-extractor
-```
-
-### Docker Compose (Optional)
-Create a `docker-compose.yml` file for easier management:
-```yaml
-version: '3.8'
-services:
-  menu-extractor:
-    build: .
-    volumes:
-      - ./input:/app/input
-      - ./output:/app/output
-    environment:
-      - MAX_CRAWL_DEPTH=3
-      - OPENAI_API_BASE=http://host.docker.internal:1234/v1
-      - OPENAI_MODEL=gpt-oss-20b
-```
 
 
 ## Performance Metrics

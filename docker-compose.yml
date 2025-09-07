@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
-  tastematch:
+  menucrawler:
     build: .
-    container_name: tastematch-crawler
+    image: menucrawler:latest
+    container_name: menucrawler
     volumes:
       # Mount input and output directories for easy access
       - ./input:/app/input:ro
